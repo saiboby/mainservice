@@ -1,0 +1,48 @@
+git clone https://github.com/saiboby/tcode.git
+cd tcode/
+git remote add cloudcode https://github.com/saiboby/cloudcode.git
+git subtree add --prefix=subproject/ https://github.com/saiboby/cloudcode.git main
+git commit -am "added new cloudcode subproject"
+git subtree pull --prefix=subproject/ https://github.com/saiboby/cloudcode.git main   (we can pull the data, so that if any changes done in cloudcode repo, those will be added subproject directory)
+
+git subtree push --prefix=subproject/ https://github.com/saiboby/cloudcode.git main   (this is to push all the data cloudcode main project)
+
+
+
+Webhook triggers work at the repository level and NOT branch level. Any commit in the repo irrespective of the branch the webhook is triggered.
+To be able to control webhook behavior I’d recommend you look at using Jenkins Generic Webhook Trigger Plugin which lets you extract specific values from the webhook like branch, commit message, files changed etc and then use those values to either trigger a downstream pipeline or just do nothing i.e. ignore the webhook. Lot of flexibility in choosing this option.
+
+We use this option and it works perfectly!
+
+
+git commit -am "adding the some extra changes-OSR"
+
+
+
+
+another process :
+git remote add cloudcode https://github.com/saiboby/cloudcode.git
+git fetch cloudcode --tags
+git merge --allow-unrelated-histories cloudcode/main
+git remote remove cloudcode
+git status
+git push origin main
+
+
+https://github.com/Shippable/support/issues/2640
+
+git ls-remote --tags   --> to list out all the tags
+
+list=[1,2,3]
+for x in list:
+	we have to run this
+
+git tag "tag_name"   <branch_name>		 --> creating a tag
+
+git tag tagname -m "write the message"     --> it is used to add the message to the particular tag
+
+git push origin "tag_name"   	 --> Pushing a tag
+
+git tag --d tag1.1   		 --> It deletes the tag
+
+git push –-tags   			 --> Push all the tags at one time
