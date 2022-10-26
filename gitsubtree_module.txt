@@ -26,7 +26,7 @@ git fetch cloudcode --tags
 git merge --allow-unrelated-histories cloudcode/main
 git remote remove cloudcode
 git status
-git push origin main
+git push origin mai
 
 
 https://github.com/Shippable/support/issues/2640
