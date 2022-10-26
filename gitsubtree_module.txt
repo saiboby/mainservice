@@ -1,4 +1,4 @@
-git clone https://github.com/saiboby/tcode.git
+git clone https://github.com/saiboby/tcode.gi
 cd tcode/
 git remote add cloudcode https://github.com/saiboby/cloudcode.git
 git subtree add --prefix=subproject/ https://github.com/saiboby/cloudcode.git main
