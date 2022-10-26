@@ -45,4 +45,4 @@ git push origin "tag_name"   	 --> Pushing a tag
 
 git tag --d tag1.1   		 --> It deletes the tag
 
-git push –-tags   			 --> Push all the tags at one time
+git push –-tag  			 --> Push all the tags at one time
