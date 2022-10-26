@@ -1,5 +1,5 @@
 git clone https://github.com/saiboby/tcode.git
-cd tcode//
+cd tcode/
 git remote add cloudcode https://github.com/saiboby/cloudcode.git
 git subtree add --prefix=subproject/ https://github.com/saiboby/cloudcode.git main
 git commit -am "added new cloudcode subproject"
