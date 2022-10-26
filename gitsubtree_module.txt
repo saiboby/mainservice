@@ -21,7 +21,7 @@ git commit -am "adding the some extra changes-OSR"
 
 
 another process :
-git remote add cloudcode https://github.com/saiboby/cloudcode.git
+git remote add cloudcode https://gihub.com/saiboby/cloudcode.git
 git fetch cloudcode --tags
 git merge --allow-unrelated-histories cloudcode/main
 git remote remove cloudcode
