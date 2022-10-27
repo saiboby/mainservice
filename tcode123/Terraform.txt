@@ -1,4 +1,4 @@
-ttps://www.terraform.io/docs/configuration/locals.htmla
+ttps://www.terraform.io/docs/configuration/locals.html
 iiiiitps://blog.gruntwork.io/terraform-tips-tricks-loops-if-statements-and-gotchas-f739bbae55f9
 https://www.terraform.io/docs/configuration/resources.html
 https://upcloud.com/community/tutorials/terraform-variables/  --> variables
