@@ -25,5 +25,6 @@ jobs:
          git subtree pull --prefix=demo1 service1 master
          #git push https://github.com/saiboby/mainservice.git master
          git push https://saiboby:${{ secrets.API_TOKEN_GITHUB }}@github.com/saiboby/mainservice.git master
+         git commit -am "files from service1 repo"
       shell: bash
      
