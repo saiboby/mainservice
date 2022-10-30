@@ -1,13 +1,29 @@
-name: learn-github-actions
-run-name: ${{ github.actor }} is learning GitHub Actions
-on: [push]
+on: 
+  push:
+    branches:
+     - master
 jobs:
   run_tests:
     runs-on: ubuntu-20.04
     steps:
     - uses: actions/checkout@v2
     - name: Run script file
+      env:
+        API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
       run: |
          chmod +x ./public/scripts/test.sh
-         ./public/scripts/test.sh
+         export GIT_MERGE_AUTOEDIT=no
+         sudo apt-get install git -y
+         git config --global user.name "saiboby"
+         git config --global user.email "saibabu.tan@gmail.com"
+         git config --list
+         cd /opt
+         git clone https://github.com/saiboby/mainservice.git
+         cd mainservice
+         git checkout master
+         git remote add service1 https://github.com/saiboby/service1.git
+         git subtree pull --prefix=demo1 service1 master
+         #git push https://github.com/saiboby/mainservice.git master
+         git push https://saiboby:${{ secrets.API_TOKEN_GITHUB }}@github.com/saiboby/mainservice.git master
       shell: bash
+     
