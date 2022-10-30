@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /bin/bashdfd
 export GIT_MERGE_AUTOEDIT=no
 apt-get install git -y
 git config --global user.name "saiboby"
