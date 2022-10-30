@@ -1,0 +1,79 @@
+ttps://www.terraform.io/docs/configuration/locals.html
+iiiiitps://blog.gruntwork.io/terraform-tips-tricks-loops-if-statements-and-gotchas-f739bbae55f9
+https://www.terraform.io/docs/configuration/resources.html
+https://upcloud.com/community/tutorials/terraform-variables/  --> variables
+
+https://www.terraform.io/docs/configuration/expressions.html  #expression
+https://blog.gruntwork.io/terraform-tips-tricks-loops-if-statements-and-gotchas-f739bbae55f9  # conditin expression
+
+https://registry.terraform.io/modules/terraform-aws-modules/vpc/aws/latest
+
+
+If you're familiar with traditional programming languages, it can be useful to compare Terraform modules to function definitions:
+
+Input variables are like function arguments.
+Output values are like function return values.
+Local values are like a function's temporary local variables
+
+https://www.terraform.io/docs/configuration/expressions.html
+
+https://learn.hashicorp.com/tutorials/terraform/count
+
+
+datasources = https://www.youtube.com/watch?v=9cDDZzl7zow
+
+dynamic output values reading --> https://stackoverflow.com/questions/50835636/accessing-terraform-variables-within-user-data-provider-template-file
+
+terraform apply -auto-approve -target=module.subnet.aws_internet_gateway.myigw . (to execute a single resource from a module)
+
+
+terraform output values list ---> https://registry.terraform.io/modules/terraform-aws-modules/ec2-instance/aws/latest
+
+dynamic values : https://blog.boltops.com/2020/10/05/terraform-hcl-loops-with-dynamic-block/
+https://www.terraform.io/language/expressions/dynamic-blocks
+
+Note: We can use dynamic for many iterator block, for example ingress, egress, exclusion_filters in datadog_index 
+varaible "exlusion_filter" {
+  type = list(map(type))
+}
+
+in .tfvars file you can mention list of dictionaries
+exclusion_filter = [{name:x, arn = "y"}, {name: "y", arn = "x"}]
+you can call them in below mentiond 
+resource "aws_security_group" "dynamic" {
+  name        = "demo-dynamic"
+  description = "demo-dynamic"
+
+  dynamic "ingress" {
+    for_each = local.ports
+    content {
+      description = "description ${ingress.key}"
+      from_port   = ingress.value
+      to_port     = ingress.value
+      protocol    = "tcp"
+      cidr_blocks = ["0.0.0.0/0"]
+    }
+  }
+}
+
+
+variable exclusion_filter {
+    type = list(map(any))
+    
+}
+
+dynamic "exclusion_filter" {
+  iterator = [name, query, sample_rate]
+  for_each = var.ingress
+  content {
+    name       = name.value
+    is_enabled = true
+    filter {
+      query       = query.value
+      sample_rate = sample_rate.value
+    }
+  }
+
+
+
+}

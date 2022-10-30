@@ -1,0 +1,92 @@
+#!/bin/bash
+# to install the nginx internal reverse proxy
+# modified 2021-04-28 Jujhar to dockerify thingssu
+
+ 
+
+
+# Installing docker and enable
+sudo apt-get update -y
+sudo apt-get install -y docker.io
+sudo systemctl enable docker
+sudo systemctl start docker
+
+ 
+
+# enable this user to docker without sudo (will have to logout to take effect for next round)
+sudo usermod -a -G docker "${USER}"
+
+ 
+
+# we need to grab an nginx default conf as our base template
+# simply grab it form a vanilla docker nginx container
+dockerId=$(sudo docker run -d nginx)
+sleep 1s
+sudo docker cp "${dockerId}":/etc/nginx/nginx.conf /etc/nginx.conf
+sudo docker cp "${dockerId}":/etc/nginx/conf.d/default.conf /etc/default.conf
+
+sudo docker kill "${dockerId}"
+
+ 
+
+# now modify nginx.conf to merge in upstream servers conf in the 'http' section
+sudo cat <<EOF > ./upstream.conf.template
+    # upstream application servers
+    # have to be added in main conf as FOSS nginx doesn't support dynamic lookups
+    upstream app {
+        server 13.235.128.140:8082;
+        
+    }
+ 
+EOF
+
+ 
+
+# now use some sed magic to munge the two files
+# first create a placeholder 'tag' then munge the files using the 'r' feature of sed
+sudo sed -i 's/http {/http { \n#FROM_UPSTREAM_TEMPLATE/' /etc/nginx.conf
+sudo sed -ie '/#FROM_UPSTREAM_TEMPLATE/rupstream.conf.template' /etc/nginx.conf
+
+ 
+
+# our virtualhosts configuration to inject in
+cat <<EOF > ./nginx-default.conf
+server {
+        listen 80 default_server;
+        listen [::]:80 default_server;
+
+        root /var/www/html;
+
+        # Add index.php to the list if you are using PHP
+        index index.html index.htm index.nginx-debian.html;
+
+        server_name _;
+
+        location / {
+        root   /usr/share/nginx/html;
+        index  index.html index.htm;
+		}
+
+
+        location /app {
+                proxy_pass http://app;
+        }
+}
+
+
+EOF
+
+ 
+
+sudo cp nginx-default.conf /etc/nginx-default.conf
+
+ 
+
+# now inject these configs into a nginx container running as a background service
+sudo docker run \
+    -d \
+    -p 80:80 \
+    --restart=always \
+    -v /etc/nginx.conf:/etc/nginx/nginx.conf:ro \
+    -v /etc/nginx-default.conf:/etc/nginx/conf.d/default.conf:ro \
+    nginx:1.19
