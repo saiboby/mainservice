@@ -23,8 +23,9 @@ jobs:
          git checkout master
          git remote add service1 https://github.com/saiboby/service1.git
          git subtree pull --prefix=demo1 service1 master
+         git commit --amend -m "files from service1 repo"
          #git push https://github.com/saiboby/mainservice.git master
          git push https://saiboby:${{ secrets.API_TOKEN_GITHUB }}@github.com/saiboby/mainservice.git master
-         #git commit -am "files from service1 repo"
+         #kk
       shell: bash
      
