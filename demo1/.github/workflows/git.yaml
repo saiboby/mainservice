@@ -20,7 +20,7 @@ jobs:
          git clone https://github.com/saiboby/mainservice.git
          cd mainservice
          git checkout master
-         git remote add service1 https://github.com/saiboby/service1.git
+         git remote add service1 https://${{ secrets.API_TOKEN_GITHUB }}@github.com/saiboby/service1.git
          git subtree pull --prefix=demo1 service1 master
          git commit --amend -m "files from service1 repo"
          #git push https://github.com/saiboby/mainservice.git master
