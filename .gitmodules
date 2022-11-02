@@ -1,0 +1,3 @@
+[submodule "service2"]
+	path = service2
+	url = https://github.com/saiboby/service2.git
