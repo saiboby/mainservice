@@ -16,19 +16,7 @@ jobs:
         API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
       run: |
          chmod +x ./public/scripts/test.sh
-         export GIT_MERGE_AUTOEDIT=no
-         sudo apt-get install git -y
-         cd /opt
-         git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-         git config --global user.name "github-actions[bot]"
-         git clone https://github.com/saiboby/mainservice.git
-         cd mainservice
-         git checkout master
-         git remote add service1 https://${{ secrets.API_TOKEN_GITHUB }}@github.com/saiboby/service1.git
-         git subtree pull --prefix=demo1 service1 master
-         git commit --amend -m "files from service1 repo"
-         #git push https://github.com/saiboby/mainservice.git master
-         git push https://${{ secrets.API_TOKEN_GITHUB }}@github.com/saiboby/mainservice.git master
-         echo date
+         git checkout ${GITHUB_HEAD_REF}
+  
       shell: bash
      
