@@ -4,9 +4,10 @@ on:
      - opened
      - edited
     branches:
-     - master
+     - test1
 jobs:
   Merge_Code:
+    name: gitmerge
     runs-on: ubuntu-20.04
     steps:
     - uses: actions/checkout@v2
