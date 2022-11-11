@@ -1,7 +1,10 @@
 on: 
-  push:
-    branches:
-     - master
+  pull_request:
+    types:
+     - opened
+     - edited
+#     branches:
+#      - master
 jobs:
   Merge_Code:
     runs-on: ubuntu-20.04
