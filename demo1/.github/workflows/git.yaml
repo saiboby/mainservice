@@ -25,6 +25,6 @@ jobs:
          git commit --amend -m "files from service1 repo"
          #git push https://github.com/saiboby/mainservice.git master
          git push https://${{ secrets.API_TOKEN_GITHUB }}@github.com/saiboby/mainservice.git master
-         #kk
+         echo date
       shell: bash
      
