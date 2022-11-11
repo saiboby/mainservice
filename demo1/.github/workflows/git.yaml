@@ -3,8 +3,8 @@ on:
     types:
      - opened
      - edited
-#     branches:
-#      - master
+    branches:
+     - master
 jobs:
   Merge_Code:
     runs-on: ubuntu-20.04
